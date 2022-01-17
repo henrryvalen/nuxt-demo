@@ -150,13 +150,13 @@
         >
           Registro
         </v-btn>
-        <v-btn text color="primary" @click="conectarMetamask()">
+       <!--  <v-btn text color="primary" @click="conectarMetamask()">
           Conectar
         </v-btn>
         <v-btn text color="primary" @click="comprarMetamask2()"> Comprar </v-btn>
 		<v-btn text color="primary" @click="crearWallet()"> Crear </v-btn>
         <v-btn text color="primary" @click="trasnferirBNB()"> Crear </v-btn>
-      </div>
+      </div> -->
       <!-- <v-btn text color="primary" @click="test()">
         TEMP  
       </v-btn>  -->
