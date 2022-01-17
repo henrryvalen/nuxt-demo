@@ -1,0 +1,16 @@
+query{
+  categories{
+    data{
+      id
+      attributes{
+        name
+        icon
+        slug
+        img
+        description
+        
+      }
+    }
+  }
+   
+}

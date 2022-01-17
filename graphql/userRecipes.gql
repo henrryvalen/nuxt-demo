@@ -1,0 +1,27 @@
+query($id:ID!){
+  recipes(filters:{autor:{id:{eq:$id}}}){
+    data{
+      id
+      attributes{
+        name
+        categorie{
+          data{
+            id
+            attributes{
+              name
+              slug
+            }
+          }
+        }
+        autor{
+          data{
+            id
+            attributes{
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+}

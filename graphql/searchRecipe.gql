@@ -1,0 +1,23 @@
+query($term:String!){
+  recipes(filters:{name:{contains:$term}}){
+    data{
+      id
+      attributes{
+        name
+        categorie{
+    data{
+      id
+      attributes{
+        name
+        icon
+        slug
+        img
+        description
+        
+      }
+    }
+  }
+      }
+    }
+  }
+}
