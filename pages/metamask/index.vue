@@ -1,6 +1,8 @@
 <template>
   <v-container
-    ><h1>Metamask {{ bnbwalletAdress }}</h1>
+    ><h1>Metamask {{ bnbwalletAdress }} </h1> 
+    <p>Cantidad de intentos {{intentos}}</p>
+     <p >Acepta contrato {{contador}}</p>
     <v-divider class="my-1"></v-divider>
     <v-btn color="green" small class="my-3" @click="conectarMetamask()"
       >Conectar metamask</v-btn
@@ -88,6 +90,8 @@ export default {
       },
       contratoLiq: "",
       precioToken: "",
+      intentos: "",
+       contador: "",
     };
   },
   methods: {
@@ -173,44 +177,45 @@ export default {
       } */
 
       if (true) {
-        getPrice(cantidadBnb, wbnb, token).then((price) => {
-          this.precioToken = price;
 
-          if (this.precioToken != "") {
-            //var originalAmountToBuyWith = "0.007" + Math.random().toString().slice(2, 7);
-            //console.log(originalAmountToBuyWith)
-
-            //var bnbAmount = web3.utils.toWei(cantidadBnb.toString().slice(2, 7), "ether");
-            //console.log(parseFloat(cantidadBnb) * 1000000000)
-            //var res = 
-            //var contador = 0
-            //while(contador==0){
-              buyOnlyone(
-              this.bnbwalletAdress,
-              parseFloat(cantidadBnb) * 1000000000,
-              wbnb,
-              token,
-              contract.router,
-              this.buscarToken.redBinance,
-              this.buscarToken.gas
-            ).then( (txHash) => {
-                console.log(txHash)
-             //   contador = contador+1;
-            }).catch((e) => {
-              console.log(e);
-              obtenerParBNB();
-            });
-            //console.log(contador);
-           // }
-
-
-            ///*  */console.log("res -->" + res);
-          }
-        });
-
-        getPair(wbnb, token).then((l) => {
+          getPair(wbnb, token).then((l) => {
           this.contratoLiq = "https://bscscan.com/address/" + l;
-        });
+        }); 
+
+        this. contador = 0;
+         this. intentos = 0;
+        while (this.contador == 0) {
+          let pr = await getPrice(cantidadBnb, wbnb, token)
+            .then((price) => {
+              this.precioToken = price;
+              this.contador = this.contador + 1;
+              if (this.precioToken != "") {
+                buyOnlyone(
+                  this.bnbwalletAdress,
+                  parseFloat(cantidadBnb) * 1000000000,
+                  wbnb,
+                  token,
+                  contract.router,
+                  this.buscarToken.redBinance,
+                  this.buscarToken.gas
+                )
+                  .then((txHash) => {
+                    console.log(txHash);
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+              }
+            })
+            .catch((e) => {
+              console.log("---------------------------");
+              console.log(e);
+              this.intentos = this.intentos + 1;
+             
+            });
+        }
+
+       
       } else {
         console.log("ERROR");
       }
